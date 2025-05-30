@@ -33,7 +33,6 @@ public class SecurityConfig {
     private final UserDetailsService userInfoImpl;
 
     @Bean
-
     public UserDetailsService userDetailsService(UserInfoRepo userInfoRepo, PasswordEncoder passwordEncoder) {
         return new UserInfoImpl(userInfoRepo, passwordEncoder);
     }
