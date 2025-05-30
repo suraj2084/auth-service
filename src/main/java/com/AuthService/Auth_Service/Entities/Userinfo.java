@@ -28,7 +28,7 @@ public class Userinfo {
     @Column(name = "user_id")
     private String userid;
     private String username;
-    private String Passowrd;
+    private String Password;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))

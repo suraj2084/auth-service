@@ -20,8 +20,10 @@ import com.AuthService.Auth_Service.Services.JwtService;
 import com.AuthService.Auth_Service.Services.RefreshTokenService;
 import com.AuthService.Auth_Service.model.AuthRequestDTO;
 
+import jakarta.validation.Valid;
+
 @RestController
-@RequestMapping("auth/v1")
+@RequestMapping("/auth/v1")
 public class ResponseTokenController {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -33,7 +35,7 @@ public class ResponseTokenController {
     private JwtService jwtService;
 
     @PostMapping("/login")
-    public ResponseEntity AuthenticateAndGetToken(@RequestBody AuthRequestDTO authRequestDTO) {
+    public ResponseEntity AuthenticateAndGetToken(@Valid @RequestBody AuthRequestDTO authRequestDTO) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword()));
         if (authentication.isAuthenticated()) {

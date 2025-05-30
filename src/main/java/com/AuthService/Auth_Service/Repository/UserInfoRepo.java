@@ -7,6 +7,6 @@ import com.AuthService.Auth_Service.Entities.Userinfo;
 
 @Repository
 public interface UserInfoRepo extends CrudRepository<Userinfo, String> {
-    public Userinfo findByUserName(String userName);
+    public Userinfo findByUsername(String username);
 
 }

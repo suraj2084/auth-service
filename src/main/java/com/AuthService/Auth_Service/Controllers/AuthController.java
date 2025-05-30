@@ -15,6 +15,8 @@ import com.AuthService.Auth_Service.Services.RefreshTokenService;
 import com.AuthService.Auth_Service.Services.Impl.UserInfoImpl;
 import com.AuthService.Auth_Service.model.UserInfoDto;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/auth/v1")
 public class AuthController {
@@ -28,7 +30,7 @@ public class AuthController {
     private UserInfoImpl userDetailsService;
 
     @PostMapping("/signup")
-    public ResponseEntity SignUp(@RequestBody UserInfoDto userInfoDto) {
+    public ResponseEntity SignUp(@Valid @RequestBody UserInfoDto userInfoDto) {
         try {
             Boolean isSignUped = userDetailsService.signUpUser(userInfoDto);
             if (Boolean.FALSE.equals(isSignUped)) {
@@ -40,7 +42,9 @@ public class AuthController {
                     JwtResponseDto.builder().accessToken(jwtToken).token(refreshToken.getToken()).build(),
                     HttpStatus.OK);
         } catch (Exception ex) {
+            ex.printStackTrace();
             return new ResponseEntity<>("Exception in User Service", HttpStatus.INTERNAL_SERVER_ERROR);
+
         }
     }
 }

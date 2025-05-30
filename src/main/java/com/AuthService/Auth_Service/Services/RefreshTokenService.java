@@ -23,7 +23,7 @@ public class RefreshTokenService {
     UserInfoRepo userInfoRepo;
 
     public RefreshToken createRefreshToken(String userName) {
-        Userinfo userinfoExtract = userInfoRepo.findByUserName(userName);
+        Userinfo userinfoExtract = userInfoRepo.findByUsername(userName);
         RefreshToken refreshToken = RefreshToken.builder()
                 .userinfo(userinfoExtract)
                 .token(UUID.randomUUID().toString())

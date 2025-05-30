@@ -38,7 +38,7 @@ public class UserInfoImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.debug("Entering in loadUserByUsername Method..");
-        Userinfo user = userInfoRepo.findByUserName(username);
+        Userinfo user = userInfoRepo.findByUsername(username);
         if (user == null) {
             log.error("Username not found: " + username);
             throw new UsernameNotFoundException("could not found user..!!");
@@ -48,16 +48,17 @@ public class UserInfoImpl implements UserDetailsService {
     }
 
     public Userinfo checkIfUserAlreadyExist(UserInfoDto userinfoDto) {
-        return userInfoRepo.findByUserName(userinfoDto.getUsername());
+        return userInfoRepo.findByUsername(userinfoDto.getUsername());
     }
 
     public Boolean signUpUser(UserInfoDto UserInfoDto) {
-        UserInfoDto.setPassowrd(passwordEncoder.encode(UserInfoDto.getPassowrd()));
+        UserInfoDto.setPassword(passwordEncoder.encode(UserInfoDto.getPassword()));
+        System.out.println("Password Set");
         if (Objects.nonNull(checkIfUserAlreadyExist(UserInfoDto))) {
             return false;
         }
         String userId = UUID.randomUUID().toString();
-        userInfoRepo.save(new Userinfo(userId, UserInfoDto.getUsername(), UserInfoDto.getPassowrd(), new HashSet<>()));
+        userInfoRepo.save(new Userinfo(userId, UserInfoDto.getUsername(), UserInfoDto.getPassword(), new HashSet<>()));
         // pushEventToQueue
         return true;
     }
