@@ -11,4 +11,6 @@ import com.AuthService.Auth_Service.Entities.RefreshToken;
 public interface TokenRefreshRepo extends CrudRepository<RefreshToken, Integer> {
     Optional<RefreshToken> findByToken(String token);
 
+    Optional<RefreshToken> findByUserinfo_Username(String username);
+
 }

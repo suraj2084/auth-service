@@ -44,4 +44,9 @@ public class RefreshTokenService {
         }
         return token;
     }
+
+    public RefreshToken getOrCreateRefreshToken(String username) {
+        return refreshTokenService.findByUserinfo_Username(username)
+                .orElseGet(() -> createRefreshToken(username));
+    }
 }

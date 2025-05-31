@@ -38,11 +38,14 @@ public class ResponseTokenController {
     public ResponseEntity AuthenticateAndGetToken(@Valid @RequestBody AuthRequestDTO authRequestDTO) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword()));
+        System.out.println("authentication");
         if (authentication.isAuthenticated()) {
-            RefreshToken refreshToken = refreshTokenService.createRefreshToken(authRequestDTO.getUsername());
+            // RefreshToken refreshToken =
+            // refreshTokenService.createRefreshToken(authRequestDTO.getUsername());
+            // System.out.println("Token Created:" + refreshToken.toString());
             return new ResponseEntity<>(JwtResponseDto.builder()
                     .accessToken(jwtService.GenerateToken(authRequestDTO.getUsername()))
-                    .token(refreshToken.getToken())
+                    .token(refreshTokenService.getOrCreateRefreshToken(authRequestDTO.getUsername()).getToken())
                     .build(), HttpStatus.OK);
 
         } else {
