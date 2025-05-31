@@ -33,7 +33,7 @@ public class RefreshToken {
     private String token;
     private Instant expiryDate;
     @OneToOne
-    @JoinColumn(name = "tokenid", referencedColumnName = "user_id")
+    @JoinColumn(name = "username", referencedColumnName = "user_id")
     private Userinfo userinfo;
 
 }
