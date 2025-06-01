@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.AuthService.Auth_Service.Services.JwtService;
-import com.AuthService.Auth_Service.Services.Impl.UserInfoImpl;
+import com.AuthService.Auth_Service.Services.UserInfoImpl;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -52,5 +52,5 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         }
         filterChain.doFilter(request, response);
-    }
+    }   //This is a commit
 }

@@ -40,9 +40,7 @@ public class ResponseTokenController {
                 new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword()));
         System.out.println("authentication");
         if (authentication.isAuthenticated()) {
-            // RefreshToken refreshToken =
-            // refreshTokenService.createRefreshToken(authRequestDTO.getUsername());
-            // System.out.println("Token Created:" + refreshToken.toString());
+
             return new ResponseEntity<>(JwtResponseDto.builder()
                     .accessToken(jwtService.GenerateToken(authRequestDTO.getUsername()))
                     .token(refreshTokenService.getOrCreateRefreshToken(authRequestDTO.getUsername()).getToken())
