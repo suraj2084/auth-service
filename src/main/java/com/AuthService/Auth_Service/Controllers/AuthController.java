@@ -12,7 +12,7 @@ import com.AuthService.Auth_Service.Entities.RefreshToken;
 import com.AuthService.Auth_Service.Response.JwtResponseDto;
 import com.AuthService.Auth_Service.Services.JwtService;
 import com.AuthService.Auth_Service.Services.RefreshTokenService;
-import com.AuthService.Auth_Service.Services.Impl.UserInfoImpl;
+import com.AuthService.Auth_Service.Services.UserInfoImpl;
 import com.AuthService.Auth_Service.model.UserInfoDto;
 
 import jakarta.validation.Valid;

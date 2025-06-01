@@ -18,8 +18,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.AuthService.Auth_Service.Event.UserInfoproducerEvent;
 import com.AuthService.Auth_Service.Repository.UserInfoRepo;
-import com.AuthService.Auth_Service.Services.Impl.UserInfoImpl;
+import com.AuthService.Auth_Service.Services.UserInfoImpl;
 
 import lombok.Data;
 
@@ -31,10 +32,14 @@ public class SecurityConfig {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private final UserDetailsService userInfoImpl;
+    @Autowired
+    private final UserInfoproducerEvent userInfoproducerEvent;
 
     @Bean
-    public UserDetailsService userDetailsService(UserInfoRepo userInfoRepo, PasswordEncoder passwordEncoder) {
-        return new UserInfoImpl(userInfoRepo, passwordEncoder);
+    public UserDetailsService userDetailsService(UserInfoRepo userInfoRepo,
+            PasswordEncoder passwordEncoder,
+            UserInfoproducerEvent userInfoproducerEvent) {
+        return new UserInfoImpl(userInfoRepo, passwordEncoder, userInfoproducerEvent);
     }
 
     @Bean

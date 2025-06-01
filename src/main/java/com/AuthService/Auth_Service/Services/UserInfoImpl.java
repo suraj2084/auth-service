@@ -1,5 +1,8 @@
-package com.AuthService.Auth_Service.Services.Impl;
+package com.AuthService.Auth_Service.Services;
 
+import java.security.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.UUID;
@@ -14,24 +17,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.AuthService.Auth_Service.Entities.Userinfo;
+import com.AuthService.Auth_Service.Event.UserInfoproducerEvent;
 import com.AuthService.Auth_Service.Repository.UserInfoRepo;
-import com.AuthService.Auth_Service.Services.CoustomUserDetails;
-
+import com.AuthService.Auth_Service.model.UserEvent;
 import com.AuthService.Auth_Service.model.UserInfoDto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Component
 @Data
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserInfoImpl implements UserDetailsService {
 
-    @Autowired
     private final UserInfoRepo userInfoRepo;
 
-    @Autowired
     private final PasswordEncoder passwordEncoder;
+
+    private final UserInfoproducerEvent userInfoproducerEvent;
 
     private static final Logger log = LoggerFactory.getLogger(UserInfoImpl.class);
 
@@ -60,6 +63,13 @@ public class UserInfoImpl implements UserDetailsService {
         String userId = UUID.randomUUID().toString();
         userInfoRepo.save(new Userinfo(userId, UserInfoDto.getUsername(), UserInfoDto.getPassword(), new HashSet<>()));
         // pushEventToQueue
+        UserEvent event = UserEvent.builder()
+                .userId(userId)
+                .eventType("SIGNUP")
+                .timestamp(Instant.now())
+                .build();
+        userInfoproducerEvent.sendUserEventToKafka(event);
+        System.out.println("EventSend For Signup");
         return true;
     }
 
